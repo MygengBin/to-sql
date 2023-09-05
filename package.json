@@ -4,13 +4,6 @@
   "description": "build sql then run in database",
   "type": "commonjs",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "buildFile": "node src/index.js buildFile",
-    "buildSingle": "node src/buildSingleSqlFile.js",
-    "build": "cross-env INIT=1 npm run buildSingle && npm run buildFile",
-    "build:update": "cross-env INIT=0 npm run buildSingle && npm run buildFile"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MygengBin/to-sql.git"
