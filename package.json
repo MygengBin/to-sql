@@ -2,6 +2,7 @@
   "name": "to-sql",
   "version": "1.0.0",
   "description": "build sql then run in database",
+  "type": "commonjs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
