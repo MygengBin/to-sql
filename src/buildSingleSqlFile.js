@@ -12,6 +12,7 @@ class main{
   columnArr=[]
   changeDataSql=''
   outputSqlPath=''
+  isInit= true
   initProcedure(){
     const createProcedureSql = `CREATE PROCEDURE ${procedureName} ( IN databaseName LONGTEXT, IN tableName LONGTEXT, IN columnName LONGTEXT, IN sqlType LONGTEXT ) 
     BEGIN
@@ -50,20 +51,21 @@ class main{
     return str
   }
   callProcedure({
-                  databaseName,
-                  tableName,
-                  columnName,
-                  sqlType,
-                }){
+    databaseName,
+    tableName,
+    columnName,
+    sqlType,
+  }){
     return `CALL ${procedureName} ('${databaseName}','${tableName}','${columnName}',"${sqlType.replace(/"/g,'\\\"')}");\n`
   }
-  constructor({ cn_name='', databaseName='', tableName ='', columnArr=[], changeDataSql, outputSqlPath }){
+  constructor({ cn_name='', databaseName='', tableName ='', columnArr=[], changeDataSql, outputSqlPath, isInit }){
     this.cn_name = cn_name
     this.databaseName = databaseName
     this.tableName = tableName
     this.columnArr = columnArr
     this.changeDataSql = changeDataSql
     this.outputSqlPath = outputSqlPath
+    this.isInit = isInit
     this.run()
   }
   run(){
@@ -72,7 +74,7 @@ class main{
     this.fullSql += this.initProcedure()
     this.fullSql +=this.buildFun()
     this.fullSql += PreExistsDeleteProcedureSql
-    if(Number(process.env.INIT)===1 && this.changeDataSql) this.fullSql += this.changeDataSql
+    if(this.isInit && this.changeDataSql) this.fullSql += this.changeDataSql
     fs.writeFileSync(path.join(this.outputSqlPath,`${this.tableName}.sql`),this.fullSql)
     console.log(`${this.tableName}.sql done`)
   }
@@ -90,11 +92,13 @@ function getSqlFileArr({jsSqlPath}){
  * @param databaseName
  * @param jsSqlPath
  * @param outputSqlPath
+ * @param isInit is init, if init and exists data then will merge
  */
 module.exports = ({
   databaseName='',
   jsSqlPath='',
   outputSqlPath='',
+  isInit= true,
 }) => {
   getSqlFileArr({jsSqlPath}).forEach(item=>{
     if(!path.extname(item).includes('js')) return
@@ -111,6 +115,7 @@ module.exports = ({
         tableName,
       }),
       outputSqlPath,
+      isInit,
     })
   })
   console.log('Run finished!')
