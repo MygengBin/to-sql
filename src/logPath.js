@@ -1,5 +1,4 @@
 const path =  require("path");
-const fs = require("fs");
 
 /**
  * For Markdown link to path
@@ -14,11 +13,11 @@ function outputFilePath({
   justRelativePath='',
 }){
   return sqlFileArr.map((item) => {
+    if(!path.extname(item).includes('js')) return null
     const allPath = path.join(sqlRequireFolderPath, item)
-    const text = fs.readFileSync(allPath, 'utf8')
-    const cn_title = text.split(/\r?\n/)[0].replace('-- ', '')
-    return `[${cn_title} ${item}](${justRelativePath}${item})`
-  }).reduce((total, item, index, arr) => {
+    const { cn_name:cn_title } = require(allPath)
+    return `[${cn_title} ${item}](${justRelativePath}/${item})`
+  }).filter(i=>i).reduce((total, item, index, arr) => {
     total += item
     if (arr.length - 1 >= index) total += '<br>\n'
     return total
