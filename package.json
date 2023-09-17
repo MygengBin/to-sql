@@ -1,5 +1,5 @@
 {
-  "name": "to-sql",
+  "name": "js-to-sql",
   "version": "1.0.0",
   "description": "build sql then run in database",
   "type": "commonjs",
