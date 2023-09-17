@@ -16,11 +16,10 @@ exports.makeInitInsert = ({
       const checkArr = [
         [ '[object Number]', item ],
         [ '[object Null]', 'null' ],
-        [ '[object String]', `'${item.replace(/\'/g,'\\\'')}'` ],
+        [ '[object String]', `'${String(item).replace(/\'/g,'\\\'')}'` ],
       ]
       const result = checkArr.find(i=>toString.call(item)===i[0])
       total += result?result[1]:'null'
-      total += toString.call(item)==='[object Number]'?item:`'${item.replace(/\'/g,'\\\'')}'`
       total += arr.length -1 ===index?')':','
       return total
     },'')
