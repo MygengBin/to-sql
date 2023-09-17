@@ -21,8 +21,8 @@ module.exports = class {
     buildDist,
     justRelativePath,
   }){
-    this.sqlFileArr = this.getSqlFileArr()
     this.sqlRequireFolderPath = sqlRequireFolderPath
+    this.sqlFileArr = this.getSqlFileArr()
     this.buildDist = buildDist
     this.justRelativePath = justRelativePath
     this.initDir()
