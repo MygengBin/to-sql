@@ -16,13 +16,13 @@ class main{
   initProcedure(){
     const createProcedureSql = `CREATE PROCEDURE ${procedureName} ( IN databaseName LONGTEXT, IN tableName LONGTEXT, IN columnName LONGTEXT, IN sqlType LONGTEXT ) 
     BEGIN
-      SET @SQL1 = "SELECT COUNT( COLUMN_NAME ) INTO @coutNum FROM INFORMATION_SCHEMA.COLUMNS WHERE ";
+      SET @SQL1 = "SELECT COUNT( COLUMN_NAME ) INTO @countNum FROM INFORMATION_SCHEMA.COLUMNS WHERE ";
       SET @selectAllSql = CONCAT( @SQL1, 'TABLE_SCHEMA = "', databaseName, '" AND TABLE_NAME = "', tableName, '" AND column_name ="', columnName, '";' );
       PREPARE stmt FROM @selectAllSql;
       EXECUTE stmt;
       DEALLOCATE PREPARE stmt;
       SET @operateSql = 'MODIFY';
-      IF @coutNum = 0 THEN SET @operateSql = "ADD"; END IF;
+      IF @countNum = 0 THEN SET @operateSql = "ADD"; END IF;
       SET @changeSql = CONCAT( "ALTER TABLE \`", databaseName, '\`.\`', tableName, '\` ', @operateSql, ' COLUMN \`', columnName, '\` ', sqlType );
       PREPARE stmt2 FROM @changeSql;
       EXECUTE stmt2;
