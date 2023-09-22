@@ -1,7 +1,7 @@
 # to-sql
 ## logPath
 logPath all sql relative path for Markdown.
-You can call`outputFilePath` in `index.js`
+You can call`outputFilePath` in `src/logPath.js`
 
 ## buildAllSqlFile
 build a sql js file output to sql file.

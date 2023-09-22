@@ -1,6 +1,5 @@
 const fs = require('fs')
 const path = require('path')
-const { outputFilePath } = require('./src/logPath')
 module.exports = class {
   sqlFileArr=[]
   sqlRequireFolderPath=''
@@ -26,14 +25,6 @@ module.exports = class {
     this.buildDist = buildDist
     this.justRelativePath = justRelativePath
     this.initDir()
-  }
-  outputFilePath(){
-    const arrSqlList = outputFilePath({
-      sqlRequireFolderPath: this.sqlRequireFolderPath,
-      sqlFileArr: this.sqlFileArr,
-      justRelativePath: this.justRelativePath,
-    })
-    console.log(arrSqlList)
   }
   build(){
     if(toString.call(this.sqlFileArr)!=='[object Array]' || !this.sqlFileArr.length) return console.log('sqlFileArr is NOT FINED')

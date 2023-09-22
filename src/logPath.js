@@ -1,17 +1,16 @@
 const path =  require("path");
-
+const fs = require('fs')
 /**
  * For Markdown link to path
  * @param sqlRequireFolderPath
- * @param sqlFileArr
  * @param justRelativePath
  * @returns {string}
  */
 function outputFilePath({
   sqlRequireFolderPath,
-  sqlFileArr=[],
   justRelativePath='',
 }){
+  const sqlFileArr = fs.readdirSync(sqlRequireFolderPath)
   return sqlFileArr.map((item) => {
     if(!path.extname(item).includes('js')) return null
     const allPath = path.join(sqlRequireFolderPath, item)
