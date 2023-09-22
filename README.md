@@ -15,4 +15,4 @@ jsSqlPath js file sql Files
 outputSqlPath you need output file path
 
 ## buildFile
-you can call `build` in `index.js`
+you can call `build` in `src/core.js`
