@@ -9,13 +9,17 @@ const fs = require('fs')
 function outputFilePath({
   sqlRequireFolderPath,
   justRelativePath='',
+  filterExtName='js',
+  setExtName='sql',
 }){
   const sqlFileArr = fs.readdirSync(sqlRequireFolderPath)
   return sqlFileArr.map((item) => {
-    if(!path.extname(item).includes('js')) return null
+    const { name, ext } = path.parse(item)
+    if(ext.substring(1)!==filterExtName) return null
     const allPath = path.join(sqlRequireFolderPath, item)
     const { cn_name:cn_title } = require(allPath)
-    return `[${cn_title} ${item}](${justRelativePath}/${item})`
+    const newName = `${name}.${setExtName}`
+    return `[${cn_title} ${newName}](${justRelativePath}/${newName})`
   }).filter(i=>i).reduce((total, item, index, arr) => {
     total += item
     if (arr.length - 1 >= index) total += '<br>\n'
